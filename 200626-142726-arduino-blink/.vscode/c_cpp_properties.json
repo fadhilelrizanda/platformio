@@ -1,0 +1,81 @@
+{
+    "configurations": [
+        {
+            "name": "!!! WARNING !!! AUTO-GENERATED FILE, PLEASE DO NOT MODIFY IT AND USE https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags"
+        },
+        {
+            "name": "Linux",
+            "includePath": [
+                "/home/fadhilelrizanda/.platformio/lib/Adafruit ADXL343_ID6117",
+                "/home/fadhilelrizanda/.platformio/lib/Adafruit BusIO_ID6214",
+                "/home/fadhilelrizanda/.platformio/lib/Adafruit DHT Unified_ID18",
+                "/home/fadhilelrizanda/.platformio/lib/Adafruit Unified Sensor_ID31",
+                "/home/fadhilelrizanda/.platformio/lib/Antares ESP8266 HTTP_ID6053/src",
+                "/home/fadhilelrizanda/.platformio/lib/Blynk_ID415/src",
+                "/home/fadhilelrizanda/.platformio/lib/DHT sensor library_ID19",
+                "/home/fadhilelrizanda/.platformio/lib/LiquidCrystal_I2C_ID576",
+                "/home/fadhilelrizanda/.platformio/lib/LiquidCrystal_ID136",
+                "/home/fadhilelrizanda/.platformio/lib/ThingSpeak_ID550/src",
+                "/home/fadhilelrizanda/.platformio/lib/WifiManager_ID567",
+                "/home/fadhilelrizanda/.platformio/lib/_tmp_installing-GsMUm9-package",
+                "/home/fadhilelrizanda/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
+                "/home/fadhilelrizanda/.platformio/packages/framework-arduino-avr/libraries/HID/src",
+                "/home/fadhilelrizanda/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
+                "/home/fadhilelrizanda/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
+                "/home/fadhilelrizanda/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                "/home/fadhilelrizanda/Documents/PlatformIO/Projects/200626-142726-arduino-blink/include",
+                "/home/fadhilelrizanda/Documents/PlatformIO/Projects/200626-142726-arduino-blink/src",
+                "/home/fadhilelrizanda/.platformio/packages/framework-arduino-avr/cores/arduino",
+                "/home/fadhilelrizanda/.platformio/packages/framework-arduino-avr/variants/standard",
+                "/home/fadhilelrizanda/.platformio/packages/tool-unity",
+                ""
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "/home/fadhilelrizanda/.platformio/lib/Adafruit ADXL343_ID6117",
+                    "/home/fadhilelrizanda/.platformio/lib/Adafruit BusIO_ID6214",
+                    "/home/fadhilelrizanda/.platformio/lib/Adafruit DHT Unified_ID18",
+                    "/home/fadhilelrizanda/.platformio/lib/Adafruit Unified Sensor_ID31",
+                    "/home/fadhilelrizanda/.platformio/lib/Antares ESP8266 HTTP_ID6053/src",
+                    "/home/fadhilelrizanda/.platformio/lib/Blynk_ID415/src",
+                    "/home/fadhilelrizanda/.platformio/lib/DHT sensor library_ID19",
+                    "/home/fadhilelrizanda/.platformio/lib/LiquidCrystal_I2C_ID576",
+                    "/home/fadhilelrizanda/.platformio/lib/LiquidCrystal_ID136",
+                    "/home/fadhilelrizanda/.platformio/lib/ThingSpeak_ID550/src",
+                    "/home/fadhilelrizanda/.platformio/lib/WifiManager_ID567",
+                    "/home/fadhilelrizanda/.platformio/lib/_tmp_installing-GsMUm9-package",
+                    "/home/fadhilelrizanda/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
+                    "/home/fadhilelrizanda/.platformio/packages/framework-arduino-avr/libraries/HID/src",
+                    "/home/fadhilelrizanda/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
+                    "/home/fadhilelrizanda/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
+                    "/home/fadhilelrizanda/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                    "/home/fadhilelrizanda/Documents/PlatformIO/Projects/200626-142726-arduino-blink/include",
+                    "/home/fadhilelrizanda/Documents/PlatformIO/Projects/200626-142726-arduino-blink/src",
+                    "/home/fadhilelrizanda/.platformio/packages/framework-arduino-avr/cores/arduino",
+                    "/home/fadhilelrizanda/.platformio/packages/framework-arduino-avr/variants/standard",
+                    "/home/fadhilelrizanda/.platformio/packages/tool-unity",
+                    ""
+                ]
+            },
+            "defines": [
+                "PLATFORMIO=40304",
+                "ARDUINO_AVR_UNO",
+                "F_CPU=16000000L",
+                "ARDUINO_ARCH_AVR",
+                "ARDUINO=10808",
+                "__AVR_ATmega328P__",
+                ""
+            ],
+            "intelliSenseMode": "clang-x64",
+            "cStandard": "c11",
+            "cppStandard": "c++11",
+            "compilerPath": "/home/fadhilelrizanda/.platformio/packages/toolchain-atmelavr/bin/avr-gcc",
+            "compilerArgs": [
+                "-mmcu=atmega328p",
+                ""
+            ]
+        }
+    ],
+    "version": 4
+}
