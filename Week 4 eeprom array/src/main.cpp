@@ -6,10 +6,11 @@
 char readData[32], receivedData[32];
 int dataIndex = 0;
 
-void readEEPROM(int address, char * data);
-void writeEEPROM(int address, char * data);
+void readEEPROM(int address, char *data);
+void writeEEPROM(int address, char *data);
 
-void setup() {
+void setup()
+{
   Serial.begin(9600);
 
   // Initialize EEPROM
@@ -20,12 +21,16 @@ void setup() {
   Serial.println(readData);
 }
 
-void loop() {
-  if (Serial.available()) {
+void loop()
+{
+  if (Serial.available())
+  {
+
     receivedData[dataIndex] = Serial.read();
     dataIndex++;
 
-    if (receivedData[dataIndex - 1] == '\n') {
+    if (receivedData[dataIndex - 1] == '\n')
+    {
       dataIndex = 0;
       writeEEPROM(0, receivedData);
       memset(receivedData, 0, EEPROM_SIZE);
@@ -33,15 +38,19 @@ void loop() {
   }
 }
 
-void readEEPROM(int address, char * data) {
-  for (int i = 0; i < EEPROM_SIZE; i++) {
+void readEEPROM(int address, char *data)
+{
+  for (int i = 0; i < EEPROM_SIZE; i++)
+  {
     data[i] = EEPROM.read(address + i);
   }
 }
 
-void writeEEPROM(int address, char * data) {
+void writeEEPROM(int address, char *data)
+{
   Serial.println("Start Writing to EEPROM");
-  for (int i = 0; i < EEPROM_SIZE; i++) {
+  for (int i = 0; i < EEPROM_SIZE; i++)
+  {
     EEPROM.write(address + i, data[i]);
   }
   EEPROM.commit();

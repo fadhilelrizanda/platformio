@@ -38,9 +38,9 @@ void loop()
     portENTER_CRITICAL(&gpioIntMux);
     changeLedStatus = false;
     portEXIT_CRITICAL(&gpioIntMux);
-    ledStatus =!ledStatus;
-    EEPROM.write(0,ledStatus);
+    ledStatus = !ledStatus;
+    EEPROM.write(0, ledStatus);
     EEPROM.commit();
-    digitalWrite(BUILTIN_LED,ledStatus);
+    digitalWrite(BUILTIN_LED, ledStatus);
   }
 }
