@@ -9,7 +9,8 @@ int dataIndex = 0;
 
 char *strings[128];
 char *ptr = NULL;
-
+char test2[128];
+bool test = true;
 char *First;
 char *Second;
 
@@ -60,6 +61,8 @@ void loop()
       dataIndex = 0;
       writeEEPROM(32, strings[0]);
       writeEEPROM(64, strings[1]);
+      test2[0] = '1';
+      writeEEPROM(0, test2);
 
       // dataIndex = 0;
       //writeEEPROM(0, ptr);
@@ -268,9 +271,9 @@ void loop()
         memset(receiveState, 0, eepromSize);
       }
   }
-}*/
 }
-
+}
+*/
 /*
 void bh1750Req(int address)
 {

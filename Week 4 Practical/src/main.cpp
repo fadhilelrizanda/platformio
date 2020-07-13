@@ -6,9 +6,10 @@
 
 //* EEPROM Config
 #define EEPROM_SIZE 128
-char readData[32], receivedData[32], ssid[32], pwd[32];
+char readData[128], receivedData[128], ssid[128], pwd[128];
 int dataIndex = 0;
-
+char ledState[128];
+bool state;
 // parsing data
 char *strings[128];
 char *ptr = NULL;
@@ -28,9 +29,6 @@ int bh1750Read(int address);
 // variable
 byte buff[2];
 unsigned short lux = 0;
-w25q64 spiChip;
-unsigned char writepage[256] = "";
-unsigned char readpage[256] = "";
 
 //* LED config
 #define LED1 2
@@ -42,18 +40,49 @@ int btnState;
 
 //* interrupt
 volatile bool interruptState = false;
-int totalInterruptCiunter = 0;
+int totalInterruptCounter = 0;
 hw_timer_s *timer = NULL;
 portMUX_TYPE timerMux = portMUX_INITIALIZER_UNLOCKED;
+portMUX_TYPE gpioIntMux = portMUX_INITIALIZER_UNLOCKED;
 
+unsigned char ledStatus = LOW;
+bool changeLedStatus = false;
+
+//function
+
+void writeState();
+
+void IRAM_ATTR gpioISR()
+{
+  detachInterrupt(digitalPinToInterrupt(button));
+  portENTER_CRITICAL(&gpioIntMux);
+  changeLedStatus = true;
+  portEXIT_CRITICAL(&gpioIntMux);
+  delay(50);
+  attachInterrupt(button, &gpioISR, FALLING);
+}
+
+void autoBrightness(bool condition);
 void setup()
 {
+  Wire.begin();
   Serial.begin(9600);
   EEPROM.begin(EEPROM_SIZE); // Initialize EEPROM
-  delay(100);
+  delay(1000);
+
+  //Actuator Pin
+  pinMode(LED1, OUTPUT);
+  pinMode(LED2, OUTPUT);
+  pinMode(LED3, OUTPUT);
+  pinMode(LED4, OUTPUT);
+  pinMode(button, INPUT_PULLUP);
+
+  pinMode(BUILTIN_LED, OUTPUT);
+  attachInterrupt(button, &gpioISR, FALLING);
+
   //Read EEPROM
   readEEPROM(0, readData);
-  Serial.print("Autobrightness: ");
+  Serial.print("Autobrightness Mode: ");
   Serial.println(readData);
   readEEPROM(32, ssid);
   Serial.print("SSID: ");
@@ -61,19 +90,72 @@ void setup()
   readEEPROM(64, pwd);
   Serial.print("PWD: ");
   Serial.println(pwd);
-  //Actuator Pin
-  pinMode(LED1, OUTPUT);
-  pinMode(LED2, OUTPUT);
-  pinMode(LED3, OUTPUT);
-  pinMode(LED4, OUTPUT);
-  pinMode(button, INPUT_PULLUP);
+  if (readData[0] == '1')
+  {
+    ledStatus = true;
+    digitalWrite(BUILTIN_LED, HIGH);
+  }
+  else
+  {
+    ledStatus = false;
+
+    digitalWrite(BUILTIN_LED, LOW);
+  }
+  Serial.println("Masukkan ssid;password");
+  delay(2000);
 }
 
 void changeChar();
 
 void loop()
 {
-  changeChar();
+
+  if (Serial.available())
+  {
+    receivedData[dataIndex] = Serial.read();
+    dataIndex++;
+
+    if (receivedData[dataIndex - 1] == '\n')
+    {
+
+      byte indexstrok = 0;
+      ptr = strtok(receivedData, ";");
+      while (ptr != NULL)
+      {
+        strings[indexstrok] = ptr;
+        indexstrok++;
+        ptr = strtok(NULL, ";");
+      }
+      Serial.println("String: " + String(strings[0]));
+      Serial.println("String: " + String(strings[1]));
+      dataIndex = 0;
+      writeEEPROM(32, strings[0]);
+      writeEEPROM(64, strings[1]);
+      Serial.println("Success ssid & pwd");
+    }
+  }
+  if (changeLedStatus)
+  {
+    portENTER_CRITICAL(&gpioIntMux);
+    changeLedStatus = false;
+    portEXIT_CRITICAL(&gpioIntMux);
+    ledStatus = !ledStatus;
+    if (ledStatus)
+    {
+      ledState[0] = '1';
+    }
+    else
+    {
+      ledState[0] = '0';
+    }
+
+    writeEEPROM(0, ledState);
+    digitalWrite(BUILTIN_LED, ledStatus);
+    autoBrightness(ledStatus);
+    Serial.println(ledStatus);
+    delay(100);
+  }
+  autoBrightness(ledStatus);
 }
 
 void bh1750Req(int address)
@@ -142,15 +224,13 @@ void changeChar()
   }
 }
 
-void autoBrightness()
+void autoBrightness(bool condition)
 {
-  if (btnState == !1)
-  {
-    memcpy(writepage, "ON", sizeof("ON"));
-    spiChip.erasePageSector(0xFFFF);
-    spiChip.pageWrite(writepage, 0XFFFF);
-    Serial.println("Writing is Done");
 
+  if (condition == true)
+  {
+    bh1750Req(bh1750Address);
+    delay(200);
     if (bh1750read(bh1750Address) == bh1750Len)
     {
       lux = (((unsigned short)buff[0] << 8) | (unsigned short)buff[1]) / 1.2;
@@ -195,14 +275,11 @@ void autoBrightness()
   }
   else
   {
-    memcpy(writepage, "OFF", sizeof("OFF"));
-    spiChip.erasePageSector(0xFFFF);
-    spiChip.pageWrite(writepage, 0XFFFF);
-    Serial.println("Writing is Done");
+
     digitalWrite(LED1, LOW);
     digitalWrite(LED2, LOW);
     digitalWrite(LED3, LOW);
     digitalWrite(LED4, LOW);
   }
-  delay(2000);
+  delay(100);
 }
