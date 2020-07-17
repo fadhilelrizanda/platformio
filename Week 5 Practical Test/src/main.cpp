@@ -124,6 +124,8 @@ void loop()
             {
               SerialBT.println("Light Sensor OFF");
             }
+
+           
           }
           else
           {
