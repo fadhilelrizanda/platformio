@@ -21,7 +21,7 @@ void loop()
   // put your main code here, to run repeatedly:
 }
 
-String translateEncryptionType(wifi_auth_mode_t encryptionType)
+String translateEncryptionType(wifi_auth_mode_t encryptionType) // Check WiFi Encryption
 {
   switch (encryptionType)
   {
@@ -52,7 +52,7 @@ String translateEncryptionType(wifi_auth_mode_t encryptionType)
     break;
   }
 }
-void scanNetworks()
+void scanNetworks() // Check Available WiFi
 {
   int numberOfNetworks = WiFi.scanNetworks();
   Serial.println("Number of Networks Found");
@@ -72,7 +72,7 @@ void scanNetworks()
     Serial.println("*****************");
   }
 }
-void connectToNetwork()
+void connectToNetwork() //Connect to Specific Network
 {
   WiFi.begin(ssid, pwd);
   while (WiFi.status() != WL_CONNECTED)
